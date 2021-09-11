@@ -1,0 +1,40 @@
+body{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    /*justify-items: center;*/
+    padding: 0 20px;
+    background-color: gainsboro;
+
+}
+main{
+    display: flex;
+    justify-content: center;
+    background-color: silver;
+    padding: 40px 0;
+    width: 100%;
+    justify-self: center;
+}
+canvas{
+    background-color: #cc6633;
+}
+footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #555555;
+    margin-top: 300px;
+    color: gainsboro;
+}
+ul{
+    
+    display: flex;
+    justify-content: center;
+}
+ul #group1{
+    margin-right: 60px;
+    
+}
+ul a{
+    color: silver;
+}

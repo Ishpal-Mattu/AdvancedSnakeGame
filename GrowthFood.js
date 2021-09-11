@@ -4,7 +4,7 @@ class GrowthFood extends Food {
         
         this.snake = snakeArray;
         super.position = this.NewPosition();        
-        this.color = 'red';
+        this.color = '#FF6347';
         this.addPiece = 1;
     }
     Update(snakeArray){

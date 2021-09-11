@@ -1,5 +1,27 @@
+// Music: “Follow Me”, from PlayOnLoop.com Licensed under Creative Commons by Attribution 4.0
+let backgroundMusic = new Sound("./Music/BackgroundMusic.wav", true, 0.7);
+
+// Sound effect when collecting GrowthFood obtained from http://soundbible.com/ under the Attribution 3.0 license
+let growthFoodEffect = new Sound("./Music/GrowthFoodSound.wav", false, 1);
+
+// gameover sound effect from https://www.freesoundslibrary.com/ under Attribution 4.0 International (CC BY 4.0) license
+let gameOverEffect = new Sound("./Music/GameOverEffect.mp3", false, 1);
+
+// sound effect when eating poisonous apple obtained from https://www.freesoundslibrary.com/ under Attribution 4.0 International (CC BY 4.0) license 
+let poisonEffect = new Sound("./Music/PoisonSound.mp3", false, 1);
+
+
 const canvas = document.getElementsByTagName('canvas')[0];
-canvas.width = 550;
+const minWidth = 550;
+const maxWidth = 900;
+
+if(window.innerWidth/2 > maxWidth)
+    canvas.width = maxWidth;
+else if(window.innerWidth/2 < minWidth)
+    canvas.width = minWidth;
+else
+    canvas.width = window.innerWidth/2;
+
 canvas.height = canvas.width/2
 const context = canvas.getContext('2d');
 const canvasContainer = document.getElementsByTagName('main')[0];
@@ -17,6 +39,7 @@ const Key = {
 let snake = new Snake(20, 10, 1);
 
 function Main(){
+
     document.removeEventListener("keydown", StartPlay);
     let gameOver = false;
     let gameWon = false;
@@ -31,7 +54,7 @@ function Main(){
 let prevDirection = snake.snakeDirection;
 
 function Intro(){
-    const xMin = 60;
+    const xMin = 30;
     const xMax = canvas.width - xMin;
     const yMin = 30;
     const yMax = canvas.height - yMin;
@@ -39,10 +62,11 @@ function Intro(){
     context.clearRect(xMin, yMin, xMax - xMin, yMax - yMin);
     context.fillRect(xMin, yMin, xMax - xMin, yMax - yMin);
 
+    const yMiddle = (yMin + yMax)/2
     context.font = "bold 25px Arial";
     context.fillStyle = 'darkblue';
     context.textAlign = "center";
-    let textY = yMin + 30;
+    let textY = yMiddle - 80;
     let text = "Advanced Snake Game";
     context.fillText(text, (xMin + xMax)/2, textY);
 
@@ -55,7 +79,7 @@ function Intro(){
     const purpleIndex = 6;
     for(let i =0; i<linesToOutput.length; i++){
         if(i == redIndex)
-            context.fillStyle = 'red'
+            context.fillStyle = '#FF6347'
         else if (i == purpleIndex)
             context.fillStyle = 'purple'
         textY += lineHeight
@@ -73,6 +97,9 @@ function Intro(){
 Intro();
 
 function GameOver(){
+    gameOverEffect.PlaySound();
+    backgroundMusic.StopSound();
+    
     const xMin = 80;
     const xMax = canvas.width - xMin
     const yMin = 40;
@@ -112,6 +139,8 @@ function SnakeDirection(event){
     
     else if(event.keyCode == Key.Right.code && snake.snakeDirection !== Key.Left.action)
         snake.ChangeDirection(Key.Right.action)
+
+    event.preventDefault();
     
 }
 
@@ -162,9 +191,17 @@ function MoveSnake(){
 }
 
 function StartPlay(e){
+    
+    
+
     if(e.keyCode == Key.Space.code){
+        if(e.target == document.body)
+            e.preventDefault();
+
         snake.ResetSnake();
-        //alert("it works");
+        backgroundMusic.PlaySound();
         Main();
+        e.prevDirection();
     }
+    
 }

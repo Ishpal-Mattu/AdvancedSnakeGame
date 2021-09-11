@@ -57,11 +57,13 @@ class Snake{
     }
     Update(x, y){
         if(this.isGrowthFoodIntersecting()){
+            growthFoodEffect.PlaySound();
             this.AddSnakePiece(this.growthFood.addPiece);
             this.growthFood.Update(this.snakePos);
             this.score.AddScore(this.growthFood.addPiece)
         }
         if(this.isPoisonIntersecting()){
+            poisonEffect.PlaySound();
             this.RemoveSnakePiece(this.poison.removePiece);
             this.poison.Update(this.snakePos, this.growthFood.position);
             this.poisonChangeCounter = 0;
